@@ -24,12 +24,14 @@ async def log_telemetry(t):
             t.get_battery(),
             t.get_speed(),
             t.get_flight_time()
-        ))
+            )
+        )
         await asyncio.sleep(1)
 
 async def fly_around(t):
     t.takeoff()
     await asyncio.sleep(10)
+    t.land()
 
 def sigint_handler(t):
         logger.info('You pressed Ctrl+C, calling failsafe()')
@@ -38,7 +40,6 @@ def sigint_handler(t):
         logger.warning('Shutting down.')
 
 if __name__ == "__main__":
-    global t
     t = tello.Tello("192.168.10.2", 8889, imperial=False,)
 
     loop = asyncio.get_event_loop()
